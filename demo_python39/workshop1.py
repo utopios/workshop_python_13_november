@@ -1,5 +1,7 @@
 from zoneinfo import ZoneInfo
 from datetime import datetime
+from typing import Annotated
+
 # Step 1: Creating the Session Configuration
 
 def create_session_config(config_default: dict, config_user: dict) -> dict:
@@ -53,3 +55,19 @@ def display_last_login(last_login_utc: datetime, timezone: str) -> str:
 # last_login_utc = datetime(2024, 11, 1, 14, 30, tzinfo=ZoneInfo("UTC"))
 last_login_utc = datetime.now(ZoneInfo('UTC'))
 print(display_last_login(last_login_utc=last_login_utc, timezone="America/New_York"))
+
+# Step 4: Validating and Archiving the Session Report
+def validate_and_archive_session_report(session_timeout: Annotated[int, "must be gt 0"], filename: str) -> str:
+    """
+    Validates that the session timeout is positive and archives the session report.
+    Returns a confirmation if archiving is successful or raises an error if the session timeout is invalid.
+    """
+    if session_timeout <= 0:
+        raise ValueError("Session timeout must be a positive number.")
+    
+    # Simulating report archiving
+    confirmation_message = f"The report '{filename}' has been archived with a session timeout of {session_timeout} minutes."
+    return confirmation_message
+
+print(validate_and_archive_session_report(30, "test"))
+validate_and_archive_session_report(-10, "test")

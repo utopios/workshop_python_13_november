@@ -65,7 +65,18 @@ print("Next floating-point number after 1.0:", next_value)
 
 from statistics import multimode
 
-data = [1, 2, 2, 3,3,3, 4, 4, 4]
+data = [1, 2, 2, 3, 3,3,3, 4, 4, 4]
 modes = multimode(data)
 print("Modes in data", modes)
 
+
+filenames = ["file1", "file2", "file3"]
+
+from contextlib import ExitStack
+
+# with [open(filename) for filename in filenames] as files:
+#     pass
+
+with ExitStack() as stack:
+    files = [stack.enter_context(open(filename) for filename in filenames)]
+    
