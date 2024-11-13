@@ -57,15 +57,15 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import math
-new_york_time = datetime.now(ZoneInfo('Europe/Paris'))
-print("Current time in New York:", new_york_time)
+paris_time = datetime.now(ZoneInfo('Europe/Paris'))
+print("Current time in Paris:", paris_time)
 
 next_value = math.nextafter(1.0, 5.0)
 print("Next floating-point number after 1.0:", next_value)
 
 from statistics import multimode
 
-data = [1, 2, 2, 3, 3,3, 4, 4, 4]
+data = [1, 2, 2, 3,3,3, 4, 4, 4]
 modes = multimode(data)
 print("Modes in data", modes)
 
