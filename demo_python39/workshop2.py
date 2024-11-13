@@ -62,3 +62,43 @@ reports_to_archive = {
 }
 
 asyncio.run(async_archive_reports(reports_to_archive))
+
+from contextlib import ExitStack
+
+def read_multiple_reports(filenames: list):
+    """
+    Opens and reads multiple session report files in a single with statement.
+    """
+    try:
+        with ExitStack() as stack:
+            files = [stack.enter_context(open(filename)) for filename in filenames]
+            for i, file in enumerate(files, start=1):
+                 print(f"Report {i} contents: ", file.read())
+    except FileNotFoundError:
+        print("Error")
+
+# Example usage for Step 4
+report_filenames = ["session_report_2024-11-01.json", "session_report_2024-11-02.json"]
+#read_multiple_reports(report_filenames)
+
+
+def read_once(filename: str) -> str:
+    with open(filename) as file:
+        return file.read()
+
+async def async_read_once(filename:str) -> str:
+    try:
+        return await asyncio.to_thread(read_once, filename)
+    except FileNotFoundError:
+        print("File not found")
+
+async def async_read_reports(filenames: list):
+    """
+    Reads multiple session report files asynchronously.
+    """
+    tasks = [async_read_once(filename) for filename in filenames]
+    results = await asyncio.gather(*tasks)
+    for i, content in enumerate(results):
+        print(f"Report {i+1} contents:", content)
+
+asyncio.run(async_read_reports(report_filenames))
