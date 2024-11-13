@@ -34,17 +34,11 @@ def user_greeting(profile):
 def match_age(age:int) -> str:
     match age:
         case age if age >= 18:
-            return "majeur"
+            return "adult"
         case _:
-            return "mineur"
+            return "not adult"
 
-def mois(mois_int:int) -> str:
-    match mois_int:
-        case 1:
-            return "Janvier"
-        ### ....
-        case _:
-            return "Erreur mois"
+
 
 # Usage examples
 print(user_greeting({'name': 'Alice', 'age': "test"}))
@@ -62,46 +56,46 @@ print(greet("Ihab"))
 print(greet(None))
 
 # 3. New `connect_accepted_socket()` method in asyncio
-import asyncio
-import socket
+# import asyncio
+# import socket
 
-async def handle_connection(reader, writer):
-    """
-    Asynchronous function to handle a network connection.
-    """
-    data = await reader.read(1024)
-    print(data)
-    writer.close()
+# async def handle_connection(reader, writer):
+#     """
+#     Asynchronous function to handle a network connection.
+#     """
+#     data = await reader.read(1024)
+#     print(data)
+#     writer.close()
 
-async def start_access_server(host:str, port:int, handler):
-    """
-    Starts an asynchronous server to handle incoming access requests.
-    """
-    server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_sock.bind((host, port))
-    server_sock.listen()
-    server_sock.setblocking(False)
+# async def start_access_server(host:str, port:int, handler):
+#     """
+#     Starts an asynchronous server to handle incoming access requests.
+#     """
+#     server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#     server_sock.bind((host, port))
+#     server_sock.listen()
+#     server_sock.setblocking(False)
 
-    loop = asyncio.get_running_loop()
-    print(f"Server running on {host}:{port}...")
+#     loop = asyncio.get_running_loop()
+#     print(f"Server running on {host}:{port}...")
 
-    while True:
-        client_sock, _ = await loop.sock_accept(server_sock)
+#     while True:
+#         client_sock, _ = await loop.sock_accept(server_sock)
         
-        #Create a StreamReader
-        reader = asyncio.StreamReader()
-        #Create a StreamReaderProtocol to bind the reader to the client socket
-        protocol = asyncio.StreamReaderProtocol(reader)
-        #Use connect_accepted_socket to integrate the socket and protocol
-        transport, _ = await loop.connect_accepted_socket(lambda: protocol, client_sock)
+#         #Create a StreamReader
+#         reader = asyncio.StreamReader()
+#         #Create a StreamReaderProtocol to bind the reader to the client socket
+#         protocol = asyncio.StreamReaderProtocol(reader)
+#         #Use connect_accepted_socket to integrate the socket and protocol
+#         transport, _ = await loop.connect_accepted_socket(lambda: protocol, client_sock)
         
-        # create a StreamWriter
-        writer = asyncio.StreamWriter(transport, protocol, reader, loop)
-        # Start processing the request
-        asyncio.create_task(handler(reader, writer))
+#         # create a StreamWriter
+#         writer = asyncio.StreamWriter(transport, protocol, reader, loop)
+#         # Start processing the request
+#         asyncio.create_task(handler(reader, writer))
 
 
-async def main():
-    await start_access_server("localhost", 8082, handle_connection)
+# async def main():
+#     await start_access_server("localhost", 8082, handle_connection)
 
-asyncio.run(main())  
+# asyncio.run(main())  
