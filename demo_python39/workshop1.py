@@ -40,3 +40,16 @@ def generate_session_report_filename(session_config: dict) -> str:
     return filename
 
 print(generate_session_report_filename(session_config=session_config))
+
+# Step 3: Displaying Last Login Time Based on Timezone
+def display_last_login(last_login_utc: datetime, timezone: str) -> str:
+    """
+    Converts the last login time in UTC to the user's timezone and returns a formatted string.
+    """
+    last_login_user_tz = last_login_utc.astimezone(ZoneInfo(timezone))
+    return last_login_user_tz.strftime("%Y-%m-%d %H:%M:%S")
+
+# Example of the last login time in UTC
+# last_login_utc = datetime(2024, 11, 1, 14, 30, tzinfo=ZoneInfo("UTC"))
+last_login_utc = datetime.now(ZoneInfo('UTC'))
+print(display_last_login(last_login_utc=last_login_utc, timezone="America/New_York"))
