@@ -40,13 +40,13 @@ print("Using type hints with built-in collections:", process_data([1, 2, 3]))
 from typing import Annotated, get_type_hints
 
 
-# def positive_number(number: Annotated[int, "positive"]) -> None:
-#     print(f"Positive number: {number}")
+def positive_number(number: Annotated[int, "positive"]) -> None:
+    print(f"Positive number: {number}")
 
 
-# positive_number(10)
-# positive_number("test")
-# positive_number(-10)
+positive_number(10)
+positive_number("test")
+positive_number(-10)
 
 # try:
 #     validate_positive_number(positive_number, -10) 
