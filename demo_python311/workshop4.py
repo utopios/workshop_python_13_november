@@ -1,6 +1,48 @@
 import csv
 from datetime import datetime
 import asyncio
+from typing import Self
+
+from collections import defaultdict
+
+class DataProcessor:
+    """
+    A class to process and analyze sales data with support for method chaining.
+    """
+    def __init__(self, data):
+        self.data = data
+
+    def filter_positive_values(self) -> Self:
+        """
+        Filters rows to ensure positive Quantity and Price values.
+        """
+        self.data = [row for row in self.data if row["Quantity"] > 0 and row["Price"] > 0]
+        return self
+
+    def calculate_revenue(self) -> Self:
+        """
+        Adds a Revenue field to each row in the data.
+        """
+        # exception = ValueError("test Error calculate")
+        # exception.add_note("Note for calculate revenue exception")
+        # raise exception
+        for row in self.data:
+            row["Revenue"] = row["Quantity"] * row["Price"]
+        return self
+
+    def group_by_month(self) -> dict:
+        """
+        Groups data by month and calculates total revenue per month.
+        """
+        monthly_revenue = defaultdict(float)
+        # exception = ValueError("group by month")
+        # exception.add_note("group by month exception")
+        # raise exception
+        for row in self.data:
+            month = row["OrderDate"].strftime("%Y-%m")
+            monthly_revenue[month] += row["Revenue"]
+        return monthly_revenue
+
 # Step 1: Data Loading and Validation with add_note()
 def load_and_validate_data(file_path):
     """
@@ -72,6 +114,13 @@ try:
     total_revenue = asyncio.run(calculate_total_revenue(data))
     print(f"Total Revenue: ${total_revenue:.2f}")
 
+    process = DataProcessor(data)
+    monthly_revenue = (process.filter_positive_values().calculate_revenue().group_by_month())
+
+    print("\n Monthly revenue : ")
+    for month, revenue in monthly_revenue.items():
+        print(f"{month}: ${revenue}")
+    
 except Exception as e:
     print(f"Unhandled exception : {e.__notes__}")
 except ExceptionGroup as eg:
