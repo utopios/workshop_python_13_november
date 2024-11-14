@@ -2,8 +2,15 @@ import csv
 from datetime import datetime
 import asyncio
 from typing import Self
+from enum import StrEnum, auto
+from pathlib import Path
 
 from collections import defaultdict
+
+class FileCategory(StrEnum):
+    SALES = auto()
+    INVENTORY = auto()
+    CUSTOMERS = auto()
 
 class DataProcessor:
     """
@@ -43,6 +50,23 @@ class DataProcessor:
             monthly_revenue[month] += row["Revenue"]
         return monthly_revenue
 
+    def categorize_data(self) -> dict:
+        """
+        Categorizes sales data based on FileCategory.
+        """
+        categorized_data = defaultdict(list)
+        for row in self.data:
+            category = FileCategory.SALES  # Example: All rows categorized under SALES
+            if int(row["ProductID"]) >= 100 and int(row["ProductID"]) < 200:
+                category = FileCategory.SALES
+            elif int(row["ProductID"]) >= 200 and int(row["ProductID"]) < 300:
+                category = FileCategory.INVENTORY
+            else:
+                category = FileCategory.CUSTOMERS
+
+            categorized_data[category].append(row)
+        return categorized_data
+
 # Step 1: Data Loading and Validation with add_note()
 def load_and_validate_data(file_path):
     """
@@ -70,6 +94,12 @@ def load_and_validate_data(file_path):
                 raise
     return valid_rows
 
+
+def list_csv_files(directory):
+    """
+    List all .csv files in the given directory.
+    """
+    return [file for file in Path(directory).glob("*.csv")]
 
 # Step 2: Asynchronous Revenue Calculation with ExceptionGroup
 async def calculate_chunk_revenue(chunk):
