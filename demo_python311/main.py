@@ -11,7 +11,7 @@ def exception_notes():
         e.add_note("Unable to fetch Google - check URL and connectivity.")
         raise
 
-# exception_notes()
+#exception_notes()
 
 
 # 3. Exception Groups and `except*` for Multiple Errors
@@ -41,13 +41,13 @@ async def main():
     except* ValueError as err:
         print(f"Data processing issue: {err}")
 
-# asyncio.run(main())
+asyncio.run(main())
 
-# 4. Typing `Self` for Method Annotations
+# # 4. Typing `Self` for Method Annotations
 from typing import Self
 
 class Custom2Path:
-    def getCustom() -> 'CustomPath':
+    def getCustom() -> 'Custom2Path':
         pass
 
 class CustomPath:
@@ -63,55 +63,55 @@ class CustomPath:
     def __str__(self):
         return self.path
 
-# Example usage
-#p = CustomPath("/home/user")
-#print(p.concat("documents"))
+# # Example usage
+# #p = CustomPath("/home/user")
+# #print(p.concat("documents"))
 
-# 5. More Precise Error Messages
-def example1():
-    """
-    Example demonstrating improved error message for an out-of-range index.
-    """
-    d = {"uno": [1, [1, 2, 3], 3]}
-    print(d["uno"][5][2])
+# # 5. More Precise Error Messages
+# def example1():
+#     """
+#     Example demonstrating improved error message for an out-of-range index.
+#     """
+#     d = {"uno": [1, [1, 2, 3], 3]}
+#     print(d["uno"][5][2])
 
-def example2():
-    """
-    Example showing Python 3.11’s detailed error message for division by zero.
-    """
-    a, b, c, d, e, f = 1, 2, 0, 4, 5, 6
-    print(a / b / c / d / e / f)
+# def example2():
+#     """
+#     Example showing Python 3.11’s detailed error message for division by zero.
+#     """
+#     a, b, c, d, e, f = 1, 2, 0, 4, 5, 6
+#     print(a / b / c / d / e / f)
 
-def example3():
-    """
-    Example highlighting Python 3.11’s clear error message when calling a method on None.
-    """
-    a = None
-    b = ""
-    print(a.capitalize() + b.capitalize())
+# def example3():
+#     """
+#     Example highlighting Python 3.11’s clear error message when calling a method on None.
+#     """
+#     a = None
+#     b = ""
+#     print(a.capitalize() + b.capitalize())
 
-#example1()  # Uncomment to see the improved IndexError
-#example2()  # Uncomment to see the detailed ZeroDivisionError
-#example3()  # Uncomment to see the error with NoneType
+# #example1()  # Uncomment to see the improved IndexError
+# #example2()  # Uncomment to see the detailed ZeroDivisionError
+# #example3()  # Uncomment to see the error with NoneType
 
-from pathlib import Path
+# from pathlib import Path
 
-def list_directories():
-    """
-    Lists only directories within a specified path using pathlib's glob with trailing slash.
-    """
-    p = Path("/Users/ihababadi/Desktop/workshop-python")  # Replace with an existing directory path
+# def list_directories():
+#     """
+#     Lists only directories within a specified path using pathlib's glob with trailing slash.
+#     """
+#     p = Path("/Users/ihababadi/Desktop/workshop-python")  # Replace with an existing directory path
 
-    print("All files and directories:")
-    for entry in p.glob("*"):
-        if entry.is_file():
-            print(entry)
+#     print("All files and directories:")
+#     for entry in p.glob("*"):
+#         if entry.is_file():
+#             print(entry)
 
-    print("\nOnly directories:")
-    for directory in p.glob("*/"):
-        print(directory)
+#     print("\nOnly directories:")
+#     for directory in p.glob("*/"):
+#         print(directory)
 
-#list_directories()
+# #list_directories()
 
 from enum import StrEnum, auto
 
@@ -121,4 +121,4 @@ class Color(StrEnum):
     BLUE = auto()
     #RED = auto()
 
-print(Color.red)
+print(Color.RED)
